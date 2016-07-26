@@ -30,15 +30,6 @@ ifdef RS_DRIVER_CLANG_EXE
 bc_clang := $(RS_DRIVER_CLANG_EXE)
 endif
 
-bc_clang_cc1_cflags := -fnative-half-type -fallow-half-arguments-and-returns
-ifeq ($(BCC_RS_TRIPLE),armv7-linux-androideabi)
-# We need to pass the +long64 flag to the underlying version of Clang, since
-# we are generating a library for use with Renderscript (64-bit long type,
-# not 32-bit).
-bc_clang_cc1_cflags += -target-feature +long64
-endif
-bc_translated_clang_cc1_cflags := $(addprefix -Xclang , $(bc_clang_cc1_cflags))
-
 # Disable deprecated warnings, because we have to support even legacy APIs.
 bc_warning_flags := -Wno-deprecated -Werror
 
